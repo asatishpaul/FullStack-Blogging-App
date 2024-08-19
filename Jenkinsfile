@@ -50,5 +50,30 @@ pipeline {
                 }
             }
         }
+        stage('docker Build & Tag') {
+            steps {
+                script {
+                withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
+                
+                sh "docker build -t asatishpaul/bloggingapp:latest ." 
+                }
+                }
+            }
+        }
+        stage('Trivy Image Scan') {
+            steps {
+                sh "trivy image --format table -o image.html asatishpaul/bloggingapp:latest"
+            }
+        }
+        stage('docker Push Image') {
+            steps {
+                script {
+                withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
+                
+                sh "docker push asatishpaul/bloggingapp:latest ." 
+                }
+                }
+            }
+        }
     }
 }
