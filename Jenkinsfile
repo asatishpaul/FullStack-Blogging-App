@@ -16,7 +16,7 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/asatishpaul/FullStack-Blogging-App'
             }
         }
-        stage('Copile') {
+        stage('Compile') {
             steps {
                 sh "mvn compile"
             }
@@ -28,13 +28,13 @@ pipeline {
         }
         stage('Trivy FS Scan') {
             steps {
-                sh "trivy fs --formate table -o fs.html ."
+                sh "trivy fs --format table -o fs.html ."
             }
         }
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('sonar-server') {
-                sh '''$SCANNER_HOME/bin/sonar-scanner  -Dsonar.projectName-Blogging-app  -Dsonar.project-Blogging-app -Dsonar.java.binaries=target'''
+                sh '''$SCANNER_HOME/bin/sonar-scanner  -Dsonar.projectName=Blogging-app  -Dsonar.projectKey=Blogging-app -Dsonar.java.binaries=target'''
                 }
             }
         }
