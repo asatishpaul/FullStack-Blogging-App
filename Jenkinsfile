@@ -70,8 +70,25 @@ pipeline {
                 script {
                 withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
                 
-                sh "docker push asatishpaul/bloggingapp:latest ." 
+                sh "docker push asatishpaul/bloggingapp:latest" 
                 }
+                }
+            }
+        }
+        stage('k8s-deploy') {
+            steps {
+                withKubeConfig(caCertificate: '', clusterName: 'devopsshack-cluster', contextName: '', credentialsId: 'k8-secret', namespace: 'webapps', restrictKubeConfigAccess: false, serverUrl: 'https://1e66084e878db6b4baf1f7e79c2f55be.gr7.ap-south-1.eks.amazonaws.com/') {
+                  sh 'ls -al'
+                  sh 'kubectl apply -f /var/lib/jenkins/workspace/ci-cd/deployment-service.yml'
+                  sleep 20
+                }
+            }
+        }
+        stage('Verify the deployment') {
+            steps {
+                withKubeConfig(caCertificate: '', clusterName: ' devopsshack-cluster', contextName: '', credentialsId: 'k8-secret', namespace: 'webapps', restrictKubeConfigAccess: false, serverUrl: 'https://1e66084e878db6b4baf1f7e79c2f55be.gr7.ap-south-1.eks.amazonaws.com/') {
+                  sh 'kubectl get pods'
+                  sh 'kubectl get svc'
                 }
             }
         }
