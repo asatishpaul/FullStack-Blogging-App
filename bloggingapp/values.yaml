@@ -1,0 +1,17 @@
+# values.yaml
+replicaCount: 2
+
+appLabel: bloggingapp
+
+image:
+  repository: asatishpaul/bloggingapp
+  tag: latest
+  pullPolicy: Always
+
+imagePullSecrets:
+  name: regcred
+
+service:
+  type: LoadBalancer
+  port: 80
+  targetPort: 8080
