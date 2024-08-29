@@ -2,14 +2,14 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "bloggingapp.fullname" . }}-svc
+  name: bloggingapp-ssvc
   labels:
     {{- include "bloggingapp.labels" . | nindent 4 }}
 spec:
-  type: {{ .Values.service.type }}
+  type: LoadBalancer
   selector:
-    app: {{ .Values.appLabel }}
+    app: bloggingapp
   ports:
     - protocol: TCP
-      port: {{ .Values.service.port }}
-      targetPort: {{ .Values.service.targetPort }}
+      port: 80
+      targetPort: 8080
