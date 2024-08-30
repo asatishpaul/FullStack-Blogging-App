@@ -5,10 +5,13 @@ metadata:
   name: bloggingapp-deployment
 spec:
   replicas: 2
+  selector:
+    matchLabels:
+      app: eks-app
   template:
     metadata:
       labels:
-        app: bloggingapp
+        app: eks-app
     spec:
       containers:
         - name: bloggingapp
