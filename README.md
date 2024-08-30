@@ -1,4 +1,3 @@
-### **Project Headline:**
 **"CI/CD Pipeline Deployment of a Full-Stack Blogging Application on AWS EKS Using Jenkins, Helm, and Terraform"**
 
 ### **Detailed Explanation of the Jenkins Pipeline Deployment Project**
