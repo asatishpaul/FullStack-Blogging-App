@@ -46,8 +46,8 @@ jobs:
         run: mvn package
 
       # Step 11: Publish Artifacts to Repository (JFrog, etc.)
-      - name: Publish Artifacts
-        run: mvn deploy   # --settings .mvn/maven-settings.xml
+      #- name: Publish Artifacts
+      #  run: mvn deploy --settings .mvn/maven-settings.xml
 
       # Step 12: Log in to DockerHub
       - name: Log in to DockerHub
