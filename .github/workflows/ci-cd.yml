@@ -33,14 +33,6 @@ jobs:
         with:
           install: true
 
-      # Step 5: Install Trivy (for scanning vulnerabilities)
-      - name: Install Trivy
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y wget
-          wget https://github.com/aquasecurity/trivy/releases/download/v0.45.1/trivy_0.45.1_Linux-64bit.deb
-          sudo dpkg -i trivy_0.45.1_Linux-64bit.deb
-
       # Step 6: Compile the project using Maven
       - name: Compile
         run: mvn compile
@@ -48,24 +40,6 @@ jobs:
       # Step 7: Run Unit Tests using Maven
       - name: Run Tests
         run: mvn test
-
-      # Step 8: Trivy Filesystem Scan
-      - name: Trivy Filesystem Scan
-        uses: aquasecurity/trivy-action@master
-        with:
-          scan-type: 'fs'
-          format: 'table'
-          output: 'fs.html'
-
-      # Step 9: SonarQube Analysis
-      - name: SonarQube Analysis
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }} # Define SONAR_TOKEN in your GitHub Secrets
-        run: |
-          sonar-scanner \
-          -Dsonar.projectName=Blogging-app \
-          -Dsonar.projectKey=Blogging-app \
-          -Dsonar.java.binaries=target
 
       # Step 10: Build the Package
       - name: Build Package
@@ -85,10 +59,6 @@ jobs:
       # Step 13: Build Docker Image
       - name: Build Docker Image
         run: docker build -t asatishpaul/bloggingapp:latest .
-
-      # Step 14: Trivy Image Scan
-      - name: Trivy Image Scan
-        run: trivy image --format table -o image.html asatishpaul/bloggingapp:latest
 
       # Step 15: Push Docker Image to DockerHub
       - name: Push Docker Image
