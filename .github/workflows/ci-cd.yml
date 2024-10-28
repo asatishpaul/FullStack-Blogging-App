@@ -59,21 +59,3 @@ jobs:
       # Step 15: Push Docker Image to DockerHub
       - name: Push Docker Image
         run: docker push asatishpaul/bloggingapp:latest
-
-      # Step 16: Set up Kubernetes Config
-      - name: Set up Kubeconfig
-        run: |
-          mkdir -p ~/.kube
-          echo "${{ secrets.KUBE_CONFIG }}" > ~/.kube/config
-
-      # Step 17: Deploy to Kubernetes
-      - name: Deploy to Kubernetes
-        run: |
-          kubectl apply -f deployment-service.yml
-          sleep 20
-
-      # Step 18: Verify Deployment
-      - name: Verify Deployment
-        run: |
-          kubectl get pods
-          kubectl get svc
