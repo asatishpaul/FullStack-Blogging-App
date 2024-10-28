@@ -45,6 +45,13 @@ jobs:
       - name: Build Package
         run: mvn package
 
+      #Step 8: Upload the buit Maven package as an artifact
+      - name: Upload Maven Package
+        uses: action/upload-artifact@v3
+        with:
+          name: maven-package
+          path: target/*.jar
+
       # Step 8: Log in to DockerHub
       - name: Log in to DockerHub
         uses: docker/login-action@v2
