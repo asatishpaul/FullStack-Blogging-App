@@ -33,29 +33,29 @@ jobs:
         with:
           install: true
 
-      # Step 6: Compile the project using Maven
+      # Step 5: Compile the project using Maven
       - name: Compile
         run: mvn compile
 
-      # Step 7: Run Unit Tests using Maven
+      # Step 6: Run Unit Tests using Maven
       - name: Run Tests
         run: mvn test
 
-      # Step 10: Build the Package
+      # Step 7: Build the Package
       - name: Build Package
         run: mvn package
 
-      # Step 12: Log in to DockerHub
+      # Step 8: Log in to DockerHub
       - name: Log in to DockerHub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      # Step 13: Build Docker Image
+      # Step 9: Build Docker Image
       - name: Build Docker Image
         run: docker build --load -t asatishpaul/bloggingapp:latest .
 
-      # Step 15: Push Docker Image to DockerHub
+      # Step 10: Push Docker Image to DockerHub
       - name: Push Docker Image
         run: docker push asatishpaul/bloggingapp:latest
