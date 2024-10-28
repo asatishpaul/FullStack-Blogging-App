@@ -47,7 +47,7 @@ jobs:
 
       #Step 8: Upload the buit Maven package as an artifact
       - name: Upload Maven Package
-        uses: action/upload-artifact@v3
+        uses: actions/upload-artifact@v3
         with:
           name: maven-package
           path: target/*.jar
